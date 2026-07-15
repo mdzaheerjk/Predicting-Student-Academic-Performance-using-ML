@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: #ffffff;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 550px;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text-main);
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Result Presentation Section */
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            text-align: center;
+        }
+
+        .result-box h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #166534;
+        }
+
+        .result-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #15803d;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Exam Performance Indicator</h1>
+   
+        <form action="{{ url_for('predict_datapoint')}}" method="post">
+            
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <select class="form-control" name="gender" required>
+                    <option value="" selected disabled>Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Race or Ethnicity</label>
+                <select class="form-control" name="ethnicity" required>
+                    <option value="" selected disabled>Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Parental Level of Education</label>
+                <select class="form-control" name="parental_level_of_education" required>
+                    <option value="" selected disabled>Select Parent Education</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="high school">High School</option>
+                    <option value="master's degree">Master's Degree</option>
+                    <option value="some college">Some College</option>
+                    <option value="some high school">Some High School</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lunch Type</label>
+                <select class="form-control" name="lunch" required>
+                    <option value="" selected disabled>Select Lunch Type</option>
+                    <option value="free/reduced">Free / Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Test Preparation Course</label>
+                <select class="form-control" name="test_preparation_course" required>
+                    <option value="" selected disabled>Select Test Course Status</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Reading Score (Out of 100)</label>
+                <input class="form-control" type="number" name="reading_score" placeholder="e.g. 75" min="0" max="100" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Writing Score (Out of 100)</label>
+                <input class="form-control" type="number" name="writing_score" placeholder="e.g. 80" min="0" max="100" required />
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Predict Math Score</button>
+            </div>
+        </form>
+
+        <!-- Conditional Flask block: Displays only when a result value exists -->
+        {% if results is not none %}
+        <div class="result-box">
+            <h2>Predicted Score Outcome</h2>
+            <span>{{ results }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
