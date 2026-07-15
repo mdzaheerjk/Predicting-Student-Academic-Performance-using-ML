@@ -7,3 +7,4 @@ catboost
 xgboost
 Flask
 dill
+pyarrow
