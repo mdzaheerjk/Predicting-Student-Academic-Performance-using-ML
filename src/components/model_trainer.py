@@ -49,7 +49,7 @@ class ModelTrainer:
 
             params={
                 'Descision Tree':{
-                    'criterion':['squared_error','friedman_mse','absolute_error','poisson'],
+                    'criterion':['squared_error','absolute_error','poisson'],
                 },
                 'Random Forest':{
                     'n_estimators':[8,16,32,64,128,256]
