@@ -4,7 +4,7 @@
 
 An end-to-end, production-ready Machine Learning system that predicts student grades and academic risk outcomes. Built with a modular data pipeline, this repository handles everything from robust feature engineering to automated model tracking and deployment.
 
-🌐 **Live Demo:** [predicting-student-academic-performance.onrender.com](https://onrender.com)
+🌐 **Live Demo:** [predicting-student-academic-performance.onrender.com](https://predicting-student-academic-performance.onrender.com/)
 
 ---
 
